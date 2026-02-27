@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Registration Form</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: linear-gradient(120deg, #b6d2d4, #66a6ff);
+        }
+
+        /* Glass container */
+        .wrapper {
+            width: 420px;
+            padding: 30px;
+
+            background: rgba(196, 187, 187, 0.2);
+            backdrop-filter: blur(12px);
+
+            border-radius: 15px;
+
+            border: 1px solid rgba(255, 255, 255, 0.3);
+
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #d05b5b;
+        }
+
+        /* Labels */
+        label {
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Inputs */
+        input,
+        select,
+        textarea {
+
+            width: 100%;
+            padding: 10px;
+
+            margin-top: 5px;
+            margin-bottom: 15px;
+
+            border-radius: 8px;
+            border: none;
+
+            background: rgba(252, 239, 239, 0.7);
+
+            transition: 0.3s;
+        }
+
+        /* Focus effect */
+        input:focus,
+        select:focus,
+        textarea:focus {
+
+            outline: none;
+
+            background: white;
+
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+
+            transform: scale(1.02);
+        }
+
+        /* Radio and checkbox inline */
+        .inline {
+            width: auto;
+            margin-right: 6px;
+        }
+
+        /* Button */
+        button {
+
+            width: 100%;
+
+            padding: 12px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: linear-gradient(45deg, #ff6a00, #ee0979);
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        button:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Error styles */
+        .error-border {
+
+            border: 2px solid red !important;
+        }
+
+        .error-bg {
+
+            background: #ffdede !important;
+        }
+
+        /* Output box */
+        #output {
+
+            margin-top: 20px;
+
+            padding: 15px;
+
+            border-radius: 10px;
+
+            background: rgba(255, 255, 255, 0.8);
+
+            color: #333;
+
+            animation: fadeIn 0.5s ease;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <h2>Registration Form</h2>
+        <div id="formContainer"></div>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        const formContainer = document.getElementById("formContainer");
+
+        formContainer.innerHTML = `
+        <form id="myForm">
+
+            <label>Name</label>
+            <input type="text" id="name" required>
+
+            <label>Email</label>
+            <input type="text" id="email" required>
+
+            <label>Password</label>
+            <input type="password" 
+                   id="password" 
+                   placeholder="8 characters with a number"
+                   required>
+
+            <label>Confirm Password</label>
+            <input type="password" id="confirmPassword" required>
+
+            <label>Gender</label><br>
+            <input type="radio" name="gender" value="Male" class="inline"> Male
+            <input type="radio" name="gender" value="Female" class="inline"> Female
+            <br><br>
+
+            <label>Skills</label><br>
+            <input type="checkbox" value="HTML" class="skill inline"> HTML
+            <input type="checkbox" value="CSS" class="skill inline"> CSS
+            <input type="checkbox" value="JavaScript" class="skill inline"> JavaScript
+            <br><br>
+
+            <label>Country</label>
+            <select id="country">
+                <option>India</option>
+                <option>Nepal</option>
+                <option>USA</option>
+            </select>
+
+            <label>About You</label>
+            <textarea id="about"></textarea>
+
+            <button type="submit">Submit</button>
+
+        </form>
+    `;
+
+        const form = document.getElementById("myForm");
+        const email = document.getElementById("email");
+        const password = document.getElementById("password");
+        const confirmPassword = document.getElementById("confirmPassword");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            if (!email.value.includes("@") || !email.value.includes(".com")) {
+                email.value = "";
+                email.classList.add("error-bg", "error-border");
+                email.placeholder = "Enter valid email (@ and .com required)";
+                return;
+            }
+
+            // Password validation (8 chars + number)
+            if (password.value.length < 8 || !/\d/.test(password.value)) {
+                password.value = "";
+                confirmPassword.value = "";
+                password.classList.add("error-bg", "error-border");
+                confirmPassword.classList.add("error-border");
+                password.placeholder = "8 characters with a number";
+                return;
+            }
+
+            // Confirm match
+            if (password.value !== confirmPassword.value) {
+                password.value = "";
+                confirmPassword.value = "";
+                password.classList.add("error-border");
+                confirmPassword.classList.add("error-border");
+                return;
+            }
+
+            const name = document.getElementById("name").value;
+            const gender = document.querySelector('input[name="gender"]:checked')?.value || "";
+            const country = document.getElementById("country").value;
+            const about = document.getElementById("about").value;
+
+            const skills = [];
+            document.querySelectorAll(".skill:checked").forEach(s => skills.push(s.value));
+
+            document.getElementById("output").innerHTML = `
+            <h3>Submitted Data</h3>
+            <p><b>Name:</b> ${name}</p>
+            <p><b>Email:</b> ${email.value}</p>
+            <p><b>Gender:</b> ${gender}</p>
+            <p><b>Skills:</b> ${skills.join(", ")}</p>
+            <p><b>Country:</b> ${country}</p>
+            <p><b>About:</b> ${about}</p>
+        `;
+        });
+
+        email.addEventListener("input", () => {
+            email.classList.remove("error-bg", "error-border");
+        });
+
+        password.addEventListener("input", () => {
+            password.classList.remove("error-bg", "error-border");
+        });
+
+        confirmPassword.addEventListener("input", () => {
+            confirmPassword.classList.remove("error-border");
+        });
+    </script>
+
+</body>
+
+</html>
