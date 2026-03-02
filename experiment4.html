@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechShop - Modern Store</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            background: linear-gradient(to right, #eef2f3, #ffffff);
+            color: #333;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        nav {
+            background: white;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #111827;
+            margin: 0 20px;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: #2563eb;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .banner {
+            background: linear-gradient(135deg, #2563eb, #4f46e5);
+            color: white;
+            padding: 60px 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .banner h2 {
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .category-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            transition: 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .category-card img {
+            width: 200px;
+            height: 150px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .category-card h3 {
+            margin-bottom: 10px;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #1e40af;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 60px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        th {
+            background: #2563eb;
+            color: white;
+            padding: 15px;
+        }
+
+        td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+        .review-box {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .newsletter-box {
+            background: #111827;
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .newsletter-box input {
+            padding: 12px;
+            border-radius: 6px;
+            border: none;
+            width: 250px;
+            margin-right: 10px;
+        }
+
+        .newsletter-box button {
+            background: #2563eb;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>🛒 TechShop Gear</h1>
+        <p>Your One-Stop Tech Destination</p>
+    </header>
+
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Products</a>
+        <a href="#">Cart</a>
+        <a href="#">Checkout</a>
+    </nav>
+
+    <main>
+
+        <div class="banner">
+            <h2>Upgrade Your Tech Today</h2>
+            <p>Discover the latest gadgets at unbeatable prices.</p>
+            <p><strong>Free Delivery on Orders Above $50</strong></p>
+        </div>
+
+        <section>
+            <h2>Popular Categories</h2>
+            <div class="category-grid">
+
+                <div class="category-card">
+                    <img src="contents/laptop.jpeg" alt="Laptops">
+                    <h3>Laptops</h3>
+                    <p>High performance machines for work & gaming.</p>
+                    <button>Explore</button>
+                </div>
+
+                <div class="category-card">
+                    <img src="contents/smartphones.jpeg" alt="Phones">
+                    <h3>Smartphones</h3>
+                    <p>Latest flagship phones with advanced features.</p>
+                    <button>Explore</button>
+                </div>
+
+                <div class="category-card">
+                    <img src="contents/accesories.jpeg" alt="Accessories">
+                    <h3>Accessories</h3>
+                    <p>Headphones, chargers, covers & more.</p>
+                    <button>Explore</button>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Hot Deals</h2>
+
+            <table>
+                <tr>
+                    <th>Product</th>
+                    <th>Old Price</th>
+                    <th>Discount</th>
+                    <th>Now</th>
+                </tr>
+                <tr>
+                    <td>Pro Laptop 15</td>
+                    <td><del>$1200</del></td>
+                    <td>20%</td>
+                    <td>$960</td>
+                </tr>
+                <tr>
+                    <td>Smart Watch X</td>
+                    <td><del>$400</del></td>
+                    <td>15%</td>
+                    <td>$340</td>
+                </tr>
+                <tr>
+                    <td>Wireless Earbuds</td>
+                    <td><del>$150</del></td>
+                    <td>25%</td>
+                    <td>$112.50</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <h2>Customer Reviews</h2>
+
+            <div class="review-box">
+                <p>"Amazing service and fast delivery. Highly recommended!"</p>
+                <strong>- Sarah Johnson</strong>
+            </div>
+
+            <div class="review-box">
+                <p>"Great prices and quality products. Will shop again!"</p>
+                <strong>- Mike Smith</strong>
+            </div>
+        </section>
+
+        <div class="newsletter-box">
+            <h3>Subscribe for Updates</h3>
+            <p>Get the latest deals and new arrivals directly to your inbox.</p>
+            <form>
+                <input type="email" placeholder="Enter your email">
+                <button>Subscribe</button>
+            </form>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 TechShop Electronics</p>
+        <p>Email: <a href="mailto:info@techshop.com">info@techshop.com</a></p>
+    </footer>
+
+</body>
+
+</html>
