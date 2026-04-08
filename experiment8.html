@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP Integration & Local Deployment Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .page-wrapper {
+            display: flex;
+            flex: 1;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: #f7fafc;
+            border-right: 1px solid #e2e8f0;
+            padding: 30px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 0 20px 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .sidebar-header h1 {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-header p {
+            font-size: 0.85em;
+            color: #718096;
+        }
+
+        .nav-list {
+            list-style: none;
+            padding: 20px 0;
+        }
+
+        .nav-list li {
+            margin: 0;
+        }
+
+        .nav-list a {
+            display: block;
+            padding: 12px 20px;
+            color: #4a5568;
+            text-decoration: none;
+            font-size: 0.95em;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .nav-list a:hover {
+            color: #2b6cb0;
+            background: #edf2f7;
+            border-left-color: #2b6cb0;
+        }
+
+        .nav-list a.active {
+            color: #2b6cb0;
+            background: #edf2f7;
+            border-left-color: #2b6cb0;
+            font-weight: 600;
+        }
+
+        .main-content {
+            margin-left: 280px;
+            padding: 50px 60px;
+            flex: 1;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            color: #1a202c;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1em;
+            color: #718096;
+        }
+
+        .step {
+            display: none;
+            margin-bottom: 60px;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        .step h2 {
+            color: #1a202c;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+            font-weight: 700;
+            scroll-margin-top: 100px;
+        }
+
+        .step-badge {
+            display: inline-block;
+            background: #edf2f7;
+            color: #2b6cb0;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .step-image {
+            width: 70%;
+            margin: 30px auto;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            display: block;
+            background: #f7fafc;
+        }
+
+        .step-content {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            margin: 25px 0;
+        }
+
+        .step-content h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .step-content p {
+            color: #4a5568;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .step-content ol,
+        .step-content ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .step-content li {
+            margin-bottom: 10px;
+            color: #4a5568;
+            line-height: 1.8;
+        }
+
+        .step-content code {
+            background: #edf2f7;
+            color: #2b6cb0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        .code-block code {
+            color: #e2e8f0;
+            background: none;
+            padding: 0;
+        }
+
+        .intro-section {
+            background: #edf2f7;
+            color: #1a202c;
+            padding: 25px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+            border-left: 4px solid #2b6cb0;
+        }
+
+        .intro-section h2 {
+            color: #1a202c;
+            margin-bottom: 15px;
+        }
+
+        .intro-section p {
+            margin-bottom: 12px;
+            line-height: 1.8;
+            color: #4a5568;
+        }
+
+        footer {
+            background: #f7fafc;
+            padding: 25px 60px;
+            border-top: 1px solid #e2e8f0;
+            color: #718096;
+            text-align: center;
+            font-size: 0.95em;
+            width: 100%;
+        }
+
+        .tip {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 16px 20px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+
+        .tip strong {
+            color: #166534;
+        }
+
+        .tip,
+        .tip p {
+            color: #15803d;
+        }
+
+        .warning {
+            background: #fefce8;
+            border-left: 4px solid #eab308;
+            padding: 16px 20px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+
+        .warning strong {
+            color: #713f12;
+        }
+
+        .warning,
+        .warning p {
+            color: #854d0e;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e0;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a0aec0;
+        }
+
+        @media (max-width: 768px) {
+            .page-wrapper {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid #e2e8f0;
+                position: static;
+                padding: 20px 0;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 30px 20px;
+            }
+
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            footer {
+                padding: 20px;
+            }
+
+            .sidebar-header {
+                padding: 0 20px 20px;
+            }
+
+            .nav-list a {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>Documentation</h1>
+                <p>PHP Integration Guide</p>
+            </div>
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="#step-0" class="nav-link active">Getting Started</a></li>
+                    <li><a href="#step-1" class="nav-link">Step 1: Setup Environment</a></li>
+                    <li><a href="#step-2" class="nav-link">Step 2: PHP Files</a></li>
+                    <li><a href="#step-3" class="nav-link">Step 3: PHP & HTML</a></li>
+                    <li><a href="#step-4" class="nav-link">Step 4: Local Deployment</a></li>
+                    <li><a href="#step-5" class="nav-link">Step 5: Best Practices</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>PHP Integration & Local Deployment</h1>
+                <p>A complete step-by-step guide for beginners</p>
+            </header>
+            <!-- Introduction Step -->
+            <div class="step active" id="step-0">
+                <span class="step-badge">Getting Started</span>
+                <div class="intro-section">
+                    <h2>Learn PHP Integration & Local Deployment</h2>
+                    <p>This guide shows you how to:</p>
+                    <ul style="margin: 10px 0 0 20px;">
+                        <li>Set up PHP on your computer</li>
+                        <li>Create and run PHP files</li>
+                        <li>Connect PHP with HTML</li>
+                        <li>Run projects locally on your machine</li>
+                    </ul>
+                </div>
+
+                <div class="step-content">
+                    <h3>📋 5 Main Steps:</h3>
+                    <ul>
+                        <li><strong>Step 1:</strong> Install PHP and tools</li>
+                        <li><strong>Step 2:</strong> Create PHP files</li>
+                        <li><strong>Step 3:</strong> Mix PHP with HTML</li>
+                        <li><strong>Step 4:</strong> Run on your computer</li>
+                        <li><strong>Step 5:</strong> Common fixes & tips</li>
+                    </ul>
+                </div>
+
+                <div class="step-content">
+                    <h3>🎯 Prerequisites:</h3>
+                    <ul>
+                        <li>Basic knowledge of HTML and CSS</li>
+                        <li>A text editor (VS Code, Sublime Text, etc.)</li>
+                        <li>PHP installed on your computer</li>
+                        <li>A web server (Apache, Nginx, or built-in PHP server)</li>
+                    </ul>
+                </div>
+
+                <div class="tip">
+                    <strong>Tip:</strong> Follow each step in order. Copy the examples into your own files.
+                </div>
+            </div>
+
+            <!-- Step 1 -->
+            <div class="step" id="step-1">
+                <span class="step-badge">Step 1 of 5</span>
+                <h2>Setting Up Your Development Environment</h2>
+
+                <img src="contents/php1.png" alt="Step 1: Setting Up Environment" class="step-image">
+
+                <div class="step-content">
+                    <h3>What is PHP?</h3>
+                    <p>PHP runs on your computer's server side. HTML runs in the browser. We're setting up PHP first.
+                    </p>
+                </div>
+
+                <div class="step-content">
+                    <h3>What to Install:</h3>
+                    <ol>
+                        <li><strong>PHP</strong> - The language for server-side code</li>
+                        <li><strong>Code Editor</strong> - VS Code or Sublime Text</li>
+                        <li><strong>Web Server</strong> - PHP built-in server (recommended)</li>
+                    </ol>
+                </div>
+
+                <div class="code-block">
+                    # Check if PHP is installed (Windows Command Prompt)
+                    php -v
+
+                    # Check PHP version and modules
+                    php -m
+                </div>
+
+                <div class="tip">
+                    <strong>✓ Tip:</strong> Use PHP's built-in server for learning. It's easy and works on any computer.
+                </div>
+
+                <div class="warning">
+                    <strong>⚠ Important:</strong> Make sure PHP is added to your system PATH so you can run it from
+                    anywhere in the command line.
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step" id="step-2">
+                <span class="step-badge">Step 2 of 5</span>
+                <h2>Creating and Configuring PHP Files</h2>
+
+                <img src="contents/php2.png" alt="Step 2: PHP File Configuration" class="step-image">
+
+                <div class="step-content">
+                    <h3>How to Create a PHP File</h3>
+                    <p>PHP files look like text files but run on the server. Create a new file and name it
+                        <code>index.php</code>.</p>
+                </div>
+
+                <div class="step-content">
+                    <h3>Basic PHP File Structure:</h3>
+                    <p>Create a file named <code>index.php</code> with the following structure:</p>
+                </div>
+
+                <div class="code-block">
+                    &lt;?php
+                    // This is a PHP comment
+                    $greeting = "Hello, World!";
+                    echo $greeting;
+                    ?&gt;
+                </div>
+
+                <div class="step-content">
+                    <h3>Project Structure Example:</h3>
+                </div>
+
+                <div class="code-block">
+                    your-project/
+                    ├── index.php
+                    ├── config.php
+                    ├── css/
+                    │ └── style.css
+                    ├── js/
+                    │ └── script.js
+                    └── images/
+                </div>
+
+                <div class="tip">
+                    <strong>✓ Tip:</strong> Keep folders organized. It makes your code easier to find later.
+                </div>
+
+                <div class="warning">
+                    <strong>⚠ Important:</strong> PHP files must have the .php extension to be processed by the PHP
+                    server.
+                    Never use .html for files containing PHP code.
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step" id="step-3">
+                <span class="step-badge">Step 3 of 5</span>
+                <h2>Integrating PHP with HTML</h2>
+
+                <img src="contents/php3.png" alt="Step 3: PHP HTML Integration" class="step-image">
+
+                <div class="step-content">
+                    <h3>How PHP & HTML Work Together</h3>
+                    <p><strong>PHP:</strong> Runs on the server → <strong>HTML:</strong> Sent to browser →
+                        <strong>Result:</strong> User sees a webpage</p>
+                </div>
+
+                <div class="step-content">
+                    <h3>Example: Displaying Dynamic Content</h3>
+                </div>
+
+                <div class="code-block">
+                    &lt;!DOCTYPE html&gt;
+                    &lt;html&gt;
+                    &lt;head&gt;
+                    &lt;title&gt;My PHP Page&lt;/title&gt;
+                    &lt;/head&gt;
+                    &lt;body&gt;
+                    &lt;h1&gt;&lt;?php echo "Welcome!"; ?&gt;&lt;/h1&gt;
+                    &lt;p&gt;&lt;?php echo date("Y-m-d H:i:s"); ?&gt;&lt;/p&gt;
+                    &lt;/body&gt;
+                    &lt;/html&gt;
+                </div>
+
+                <div class="step-content">
+                    <h3>Key PHP Tools:</h3>
+                    <ol>
+                        <li><strong>echo</strong> - Print text on the page</li>
+                        <li><strong>Variables</strong> - Store data ($name = "John")</li>
+                        <li><strong>if/else</strong> - Make decisions</li>
+                        <li><strong>loops</strong> - Repeat code</li>
+                    </ol>
+                </div>
+
+                <div class="tip">
+                    <strong>✓ Tip:</strong> Don't mix PHP and HTML too much. Keep PHP in separate files to stay
+                    organized.
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step" id="step-4">
+                <span class="step-badge">Step 4 of 5</span>
+                <h2>Running Your Application Locally</h2>
+
+                <img src="contents/php4.png" alt="Step 4: Local Deployment" class="step-image">
+
+                <div class="step-content">
+                    <h3>Run Your Project Locally</h3>
+                    <p>Use the built-in PHP server to test your project on your computer before uploading it.</p>
+                </div>
+
+                <div class="step-content">
+                    <h3>Using PHP Built-in Server (Easiest Method):</h3>
+                </div>
+
+                <div class="code-block">
+                    # Navigate to your project folder
+                    cd C:\path\to\your-project
+
+                    # Start the built-in PHP server
+                    php -S localhost:8000
+
+                    # Open your browser and go to:
+                    # http://localhost:8000
+                </div>
+
+                <div class="step-content">
+                    <h3>Using Apache Server:</h3>
+                    <ol>
+                        <li>Place your project in Apache's root directory (htdocs)</li>
+                        <li>Start Apache using Apache Control Panel or command line</li>
+                        <li>Access your site via <code>http://localhost/your-project</code></li>
+                    </ol>
+                </div>
+
+                <div class="tip">
+                    <strong>✓ Tip:</strong> Use built-in server for practice. Use Apache for real websites.
+                </div>
+
+                <div class="warning">
+                    <strong>⚠ Important:</strong> If port 8000 doesn't work, try 8001 or 8080.
+                </div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="step" id="step-5">
+                <span class="step-badge">Step 5 of 5</span>
+                <h2>Troubleshooting & Best Practices</h2>
+
+                <img src="contents/php5.png" alt="Step 5: Best Practices" class="step-image">
+
+                <div class="step-content">
+                    <h3>Quick Fixes</h3>
+                </div>
+
+                <div class="step-content">
+                    <h3>Problem 1: "PHP is not recognized"</h3>
+                    <p><strong>Fix:</strong> PHP is not installed or not in PATH. Download PHP and add it to your
+                        computer's settings.</p>
+                </div>
+
+                <div class="step-content">
+                    <h3>Problem 2: "Port 8000 in use"</h3>
+                    <p><strong>Fix:</strong> Use a different port: <code>php -S localhost:8001</code></p>
+                </div>
+
+                <div class="step-content">
+                    <h3>Problem 3: "500 Error"</h3>
+                    <p><strong>Fix:</strong> Check your PHP code for typos. Look at the error message.</p>
+                </div>
+
+                <div class="step-content">
+                    <h3>✅ Best Practices:</h3>
+                    <ul>
+                        <li>Test your code before uploading it</li>
+                        <li>Write comments to explain your code</li>
+                        <li>Use simple variable names like $name, $age</li>
+                        <li>Keep passwords out of your code</li>
+                        <li>Check what users type in (don't trust it)</li>
+                        <li>Use Git to save your work</li>
+                    </ul>
+                </div>
+
+                <div class="tip">
+                    <strong>✓ Great!</strong> You now know how to use PHP. Build something cool!
+                </div>
+
+                <div class="step-content">
+                    <h3>📚 What's Next:</h3>
+                    <ul>
+                        <li>Learn databases (MySQL)</li>
+                        <li>Try PHP frameworks (Laravel)</li>
+                        <li>Build forms that save data</li>
+                        <li>Add user login/signup</li>
+                        <li>Learn about website security</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>📚 PHP Integration & Local Deployment Guide | Created for Learning</p>
+    </footer>
+
+    <script>
+        // Handle sidebar navigation
+        const navLinks = document.querySelectorAll('.nav-link');
+        const steps = document.querySelectorAll('.step');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                // Remove active class from all links
+                navLinks.forEach(l => l.classList.remove('active'));
+                // Add active class to clicked link
+                link.classList.add('active');
+
+                // Hide all steps
+                steps.forEach(step => step.classList.remove('active'));
+
+                // Show selected step
+                const targetId = link.getAttribute('href');
+                const targetStep = document.querySelector(targetId);
+                if (targetStep) {
+                    targetStep.classList.add('active');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Smooth scroll behavior for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

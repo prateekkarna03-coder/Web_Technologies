@@ -12,7 +12,7 @@
             box-sizing: border-box;
         }
 
-        h1{
+        h1 {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: rgb(10, 122, 220);
         }
@@ -42,7 +42,7 @@
         input {
             padding: 10px;
             width: 200px;
-            background-color:antiquewhite;
+            background-color: antiquewhite;
         }
 
         .buttons {
@@ -123,33 +123,33 @@
 
 
     <script>
-        function calculate(operation){
+        function calculate(operation) {
 
             let n1 = Number(document.getElementById("num1").value);
             let n2 = Number(document.getElementById("num2").value);
 
             let result;
 
-            if(operation == 'add'){
+            if (operation == 'add') {
                 result = n1 + n2;
             }
-            else if(operation == 'sub'){
+            else if (operation == 'sub') {
                 result = n1 - n2;
             }
-            else if(operation == 'mul'){
+            else if (operation == 'mul') {
                 result = n1 * n2;
             }
-            else if(operation == 'div'){
-                if(n2==0){
+            else if (operation == 'div') {
+                if (n2 == 0) {
                     result = "Cannot Divided By 0";
                 }
-                else{
-                    result=n1/n2;
+                else {
+                    result = n1 / n2;
                 }
             }
 
             document.getElementById("result").innerText = result;
-            
+
 
         }
     </script>
