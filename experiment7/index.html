@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <h2>Registration Form</h2>
+        <div id="formContainer"></div>
+    </div>
+
+    <div class="wrapper submitted-data-container">
+        <div class="submitted-data-title">Submitted Data</div>
+        <div class="table-controls">
+            <button type="button" id="copyBtn" onclick="copyTableToClipboard()">📋 Copy Table</button>
+            <button type="button" id="exportBtn" onclick="exportTableToCSV()">📥 Export CSV</button>
+        </div>
+        <div id="tableContainer"></div>
+    </div>
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>
